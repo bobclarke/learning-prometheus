@@ -1,0 +1,25 @@
+version: '3'
+services:
+  prom:
+    build: ./server
+    ports:
+      - "9090:9090"
+
+  blackbox:
+    build: ./blackbox
+    ports:
+      - "9115:9115"
+    entrypoint:
+    - /bin/blackbox_exporter
+    - --config.file=/etc/blackbox_exporter/config.yml
+    - --log.level=debug
+  
+  app:
+    build: ./app
+    ports:
+      - "3000:3000"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "8000:3000"
