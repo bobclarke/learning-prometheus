@@ -1,10 +1,23 @@
 modules:
-  http_2xx:
+  wikipedia:
     prober: http
     timeout: 5s
     http:
       fail_if_not_matches_regexp:
-        - "Hello World"
+        - "Welcome to Wikipedia"
+      preferred_ip_protocol: "ip4"
+      valid_http_versions:
+        - "HTTP/1.1" 
+        - "HTTP/2"
+      method: GET
+      tls_config:
+        insecure_skip_verify: true
+  ubuntu:
+    prober: http
+    timeout: 5s
+    http:
+      fail_if_not_matches_regexp:
+        - "Everything you need to know about Ubuntu"
       preferred_ip_protocol: "ip4"
       valid_http_versions:
         - "HTTP/1.1" 
