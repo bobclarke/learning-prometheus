@@ -1,11 +1,14 @@
 version: '3'
 services:
-  prom:
+  prom-server:
     build: ./server
     ports:
       - "9090:9090"
 
-  blackbox:
+  node-exporter:
+    image: prom/node-exporter:latest
+
+  blackbox-exporter:
     build: ./blackbox
     ports:
       - "9115:9115"
@@ -14,12 +17,12 @@ services:
     - --config.file=/etc/blackbox_exporter/config.yml
     - --log.level=debug
   
-  app:
-    build: ./app
-    ports:
-      - "3000:3000"
+  #app:
+  #  build: ./app
+  #  ports:
+  #    - "3000:3000"
 
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "8000:3000"
+  #grafana:
+  #  image: grafana/grafana
+  #  ports:
+  #    - "8000:3000"

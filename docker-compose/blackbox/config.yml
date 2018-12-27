@@ -1,4 +1,11 @@
 modules:
+  check_for_http_200:
+    prober: http
+    timeout: 5s
+    http:
+      preferred_ip_protocol: ip4
+      method: GET
+
   wikipedia:
     prober: http
     timeout: 5s

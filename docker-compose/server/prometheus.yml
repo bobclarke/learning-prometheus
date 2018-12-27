@@ -2,20 +2,47 @@ global:
   scrape_interval:     5s
   evaluation_interval: 5s
 
+rule_files:
+  - ssl_expiry.rules
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
     - targets: ['localhost:9090']
 
+  - job_name: 'node_exporter'
+    static_configs:
+    - targets: ['node-exporter:9100']
+      labels:
+        group: 'production'
+
+    metric_relabel_configs:
+    - source_labels: [instance]
+      regex: '(node-exporter):9100'
+      replacement: '$1'
+      target_label: 'my_new_label'
+
+    relabel_configs:    
+    - source_labels: [__address__]
+      regex: '(.*)'
+      replacement: '$1'
+      target_label: 'my_address'
+
+          
+
   - job_name: 'blackbox'
     metrics_path: /probe
     params:
-      module: [http_2xx]
+      #module: [http_2xx]
+      module: [check_for_http_200]
     scrape_interval: 10s
     scrape_timeout: 10s
     static_configs:
       - targets:
-        - http://app:3000
+        - https://google.co.uk
+        - https://bbc.co.uk
+        - https://dhashdhashda.co.uk
+
 
     relabel_configs:
       - source_labels: [__address__]
@@ -23,14 +50,14 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: blackbox:9115
+        replacement: blackbox-exporter:9115
 
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
+#alerting:
+#  alertmanagers:
+#  - static_configs:
+#    - targets:
       # - alertmanager:9093
 
-rule_files:
+#rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
