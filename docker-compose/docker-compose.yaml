@@ -26,3 +26,16 @@ services:
   #  image: grafana/grafana
   #  ports:
   #    - "8000:3000"
+
+
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prom-server
+    ports:
+      - 4000:3000
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources/
+      - ./grafana/dashboard-providers:/etc/grafana/provisioning/dashboards/
+      - ./grafana/dashboards:/var/lib/grafana/dashboards/
+

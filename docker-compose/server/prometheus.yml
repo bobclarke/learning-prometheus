@@ -41,7 +41,9 @@ scrape_configs:
       - targets:
         - https://google.co.uk
         - https://bbc.co.uk
-        - https://dhashdhashda.co.uk
+        - https://amazon.co.uk
+        - https://prometheus.io
+        - https://www.blackheath.org
 
 
     relabel_configs:
