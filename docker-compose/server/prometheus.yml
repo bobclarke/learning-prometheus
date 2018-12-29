@@ -36,16 +36,18 @@ scrape_configs:
       module: [check_for_http_200]
     scrape_interval: 10s
     scrape_timeout: 10s
-    static_configs:
-      - targets:
+    
+    #static_configs:
+    #  - targets:
     #    - https://google.co.uk
     #    - https://bbc.co.uk
     #    - https://amazon.co.uk
     #    - https://prometheus.io
-        - https://www.blackheath.org
+    #    - https://www.blackheath.org
+    
     dns_sd_configs:  
       - names:
-        - 'gitea.az.globaldevops.gdpdentsu.net'
+        - 'gitea-instances.az.globaldevops.gdpdentsu.net'
 
 
     relabel_configs:
@@ -55,6 +57,12 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115
+      #- source_labels: [instance]
+      #  target_label: temp_store1
+      - source_labels: [instance]
+        regex: '(gitea-tooling)(.*):443'
+        target_label: __param_target
+        replacement:   'https://$1$2'
   
   
   #- job_name: 'dns-sd-testing'
