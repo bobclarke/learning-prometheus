@@ -29,26 +29,21 @@ scrape_configs:
       target_label: 'my_address'
 
 
-  - job_name: 'blackbox'
+  - job_name: 'blackbox-cert-check'
     metrics_path: /probe
     params:
-      #module: [http_2xx]
-      module: [check_for_http_200]
+      module: [cert_check]
     scrape_interval: 10s
     scrape_timeout: 10s
     
-    #static_configs:
-    #  - targets:
-    #    - https://google.co.uk
-    #    - https://bbc.co.uk
-    #    - https://amazon.co.uk
-    #    - https://prometheus.io
-    #    - https://www.blackheath.org
+    static_configs:
+      - targets:
+        - https://tvstack.dentsuaegis.com
+        - https://admin.tvstack.dentsuaegis.com
     
     dns_sd_configs:  
       - names:
         - 'gitea-instances.az.globaldevops.gdpdentsu.net'
-
 
     relabel_configs:
       - source_labels: [__address__]
@@ -57,12 +52,37 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115
-      #- source_labels: [instance]
-      #  target_label: temp_store1
       - source_labels: [instance]
         regex: '(gitea-tooling)(.*):443'
         target_label: __param_target
         replacement:   'https://$1$2'
+      - source_labels: [__param_target]
+        target_label: instance
+
+  - job_name: 'blackbox-gitea-regex'
+    metrics_path: /probe
+    params:
+      module: [gitea_regex]
+    scrape_interval: 10s
+    scrape_timeout: 10s
+    
+    dns_sd_configs:  
+      - names:
+        - 'gitea-instances.az.globaldevops.gdpdentsu.net'
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+      - source_labels: [instance]
+        regex: '(gitea-tooling)(.*):443'
+        target_label: __param_target
+        replacement:   'https://$1$2'
+      - source_labels: [__param_target]
+        target_label: instance
   
   
   #- job_name: 'dns-sd-testing'

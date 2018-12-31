@@ -1,30 +1,17 @@
 modules:
-  check_for_http_200:
+  cert_check:
     prober: http
     timeout: 5s
     http:
       preferred_ip_protocol: ip4
       method: GET
 
-  wikipedia:
+  gitea_regex:
     prober: http
     timeout: 5s
     http:
       fail_if_not_matches_regexp:
-        - "Welcome to Wikipedia"
-      preferred_ip_protocol: "ip4"
-      valid_http_versions:
-        - "HTTP/1.1" 
-        - "HTTP/2"
-      method: GET
-      tls_config:
-        insecure_skip_verify: true
-  ubuntu:
-    prober: http
-    timeout: 5s
-    http:
-      fail_if_not_matches_regexp:
-        - "Everything you need to know about Ubuntu"
+        - "Git with a cup of tea"
       preferred_ip_protocol: "ip4"
       valid_http_versions:
         - "HTTP/1.1" 
