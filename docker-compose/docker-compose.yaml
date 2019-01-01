@@ -1,5 +1,8 @@
 version: '3'
 services:
+  #######################
+  # First stack
+  #######################
   prom-server:
     build: ./server
     ports:
@@ -16,17 +19,6 @@ services:
     - /bin/blackbox_exporter
     - --config.file=/etc/blackbox_exporter/config.yml
     - --log.level=debug
-  
-  #app:
-  #  build: ./app
-  #  ports:
-  #    - "3000:3000"
-
-  #grafana:
-  #  image: grafana/grafana
-  #  ports:
-  #    - "8000:3000"
-
 
   grafana:
     image: grafana/grafana
@@ -39,3 +31,22 @@ services:
       - ./grafana/dashboard-providers:/etc/grafana/provisioning/dashboards/
       - ./grafana/dashboards:/var/lib/grafana/dashboards/
 
+  #######################
+  # Second stack
+  #######################
+  prom-server2:
+    build: ./server2
+    ports:
+      - "9091:9090"
+  
+  grafana2:
+    image: grafana/grafana
+    depends_on:
+      - prom-server2
+    ports:
+      - 4001:3000
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources2/
+      #- ./grafana/dashboard-providers:/etc/grafana/provisioning/dashboards2/
+      #- ./grafana/dashboards:/var/lib/grafana/dashboards/
+  

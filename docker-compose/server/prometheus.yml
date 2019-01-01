@@ -1,6 +1,8 @@
 global:
   scrape_interval:     5s
   evaluation_interval: 5s
+  external_labels:
+    cluster: test
 
 rule_files:
   - ssl_expiry.rules
