@@ -1,52 +1,41 @@
 version: '3'
 services:
   #######################
-  # First stack
+  #  master
   #######################
-  prom-server:
-    build: ./server
+  prom-server-master:
+    build: ./master/server
     ports:
-      - "9090:9090"
+      - "2000:9090"
 
-  node-exporter:
+
+  #######################
+  # Sub001
+  #######################
+  prom-server-sub001:
+    build: ./sub001/server
+    ports:
+      - "3000:9090"
+  
+  node-exporter-sub001:
     image: prom/node-exporter:latest
 
-  blackbox-exporter:
-    build: ./blackbox
+  blackbox-exporter-sub001:
+    build: ./sub001/blackbox
     ports:
-      - "9115:9115"
+      - "3010:9115"
     entrypoint:
     - /bin/blackbox_exporter
     - --config.file=/etc/blackbox_exporter/config.yml
     - --log.level=debug
 
-  grafana:
+  grafana-sub001:
     image: grafana/grafana
     depends_on:
-      - prom-server
+      - prom-server-sub001
     ports:
-      - 4000:3000
+      - 3020:3000
     volumes:
-      - ./grafana/datasources:/etc/grafana/provisioning/datasources/
-      - ./grafana/dashboard-providers:/etc/grafana/provisioning/dashboards/
-      - ./grafana/dashboards:/var/lib/grafana/dashboards/
-
-  #######################
-  # Second stack
-  #######################
-  prom-server2:
-    build: ./server2
-    ports:
-      - "9091:9090"
-  
-  grafana2:
-    image: grafana/grafana
-    depends_on:
-      - prom-server2
-    ports:
-      - 4001:3000
-    volumes:
-      - ./grafana/datasources:/etc/grafana/provisioning/datasources2/
-      #- ./grafana/dashboard-providers:/etc/grafana/provisioning/dashboards2/
-      #- ./grafana/dashboards:/var/lib/grafana/dashboards/
-  
+      - ./sub001/grafana/datasources:/etc/grafana/provisioning/datasources/
+      - ./sub001/grafana/dashboard-providers:/etc/grafana/provisioning/dashboards/
+      - ./sub001/dashboards:/var/lib/grafana/dashboards/
