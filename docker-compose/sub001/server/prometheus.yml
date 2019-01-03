@@ -40,12 +40,12 @@ scrape_configs:
     
     static_configs:
       - targets:
-        - https://tvstack.dentsuaegis.com
-        - https://admin.tvstack.dentsuaegis.com
+        - https://bbc.co.uk
+        - https://prometheus.io
     
     dns_sd_configs:  
       - names:
-        - 'gitea-instances.az.globaldevops.gdpdentsu.net'
+        - 'gitea-instances.stack1.com'
 
     relabel_configs:
       - source_labels: [__address__]
@@ -70,7 +70,7 @@ scrape_configs:
     
     dns_sd_configs:  
       - names:
-        - 'gitea-instances.az.globaldevops.gdpdentsu.net'
+        - 'gitea-instances.stack1.com'
 
     relabel_configs:
       - source_labels: [__address__]
@@ -87,24 +87,4 @@ scrape_configs:
         target_label: instance
   
   
-  #- job_name: 'dns-sd-testing'
-  #  dns_sd_configs:  
-  #  - names:
-  #    - 'gitea.az.globaldevops.gdpdentsu.net'
-      
-    #relabel_configs:
-    #- source_labels: ['__meta_dns_name']
-    #  regex:         'telemetry\.(.+?)\..+?\.srv\.example\.org'
-    #  target_label:  'zone'
-    #  replacement:   '$1'
 
-
-#alerting:
-#  alertmanagers:
-#  - static_configs:
-#    - targets:
-      # - alertmanager:9093
-
-#rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
