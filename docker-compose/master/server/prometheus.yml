@@ -3,11 +3,12 @@ global:
   evaluation_interval: 5s
 
 scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-    - targets: ['prom-server-master:9090']
+  #- job_name: 'prometheus'
+  #  static_configs:
+  #  - targets: ['prom-server-master:9090']
 
-  - job_name: 'federate'
+
+  - job_name: 'metrics_from_other_prom_servers'
     scrape_interval: 15s
 
     honor_labels: true
@@ -15,7 +16,9 @@ scrape_configs:
 
     params:
       'match[]':
-        - '{job="prometheus"}'
-        - '{job="federate"}'
-        - '{__name__=~"job:.*"}'
+        - '{job="blackbox-cert-check"}'
+        #- '{__name__=~"job:.*"}'
+
+    static_configs:
+    - targets: ['prom-server-sub001:9090']
   
