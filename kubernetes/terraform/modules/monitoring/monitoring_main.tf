@@ -38,6 +38,7 @@ resource "helm_release" "prometheus-blackbox-exporter" {
     depends_on          = ["helm_release.prometheus"] 
 }
 
+/*
 resource "helm_release" "grafana" {
     count               = "${var.enabled}"
     name                = "grafana"
@@ -49,6 +50,7 @@ resource "helm_release" "grafana" {
     ]
     depends_on          = ["helm_release.prometheus"] 
 }
+*/
 
 
 
