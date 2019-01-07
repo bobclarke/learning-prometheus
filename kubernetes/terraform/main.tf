@@ -123,7 +123,7 @@ module "monitoring" {
   enabled                     = 1
   source                      = "modules/monitoring"
   namespace                   = "monitoring"
-  domain                      = "monitoring.stack1.net"
+  domain                      = "${var.domain}"
 }
 
 

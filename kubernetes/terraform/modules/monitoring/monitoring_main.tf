@@ -4,6 +4,13 @@ resource "helm_release" "prometheus" {
     namespace           = "${var.namespace}"
     chart               = "prometheus"
     repository          = "stable"
+
+    values = [
+        <<-EOF
+        domain: "${var.domain}"
+        EOF
+    ]
+
     values = [
         "${ file( "${path.module}/config/prometheus-values.yaml" ) }"
     ]

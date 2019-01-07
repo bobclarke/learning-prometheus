@@ -2,4 +2,6 @@ variable "enabled" {
     default = 0
 }
 variable "namespace" {}
-variable "domain" {}
+variable "domain" {
+    default = "monitoring.stack1.net"
+}

@@ -23,3 +23,9 @@ variable "k8s_password" {
 variable "network_name" {
 	default = "terraform-learning-net"
 }
+variable "domain" {
+	default = "monitoring.stack1.net"
+	type = "string"
+}
+
+
