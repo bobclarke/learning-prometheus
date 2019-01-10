@@ -24,7 +24,7 @@ variable "network_name" {
 	default = "terraform-learning-net"
 }
 variable "domain" {
-	default = "monitoring.stack1.net"
+	default = "stack1.net"
 	type = "string"
 }
 

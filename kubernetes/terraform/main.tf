@@ -126,6 +126,14 @@ module "monitoring" {
   domain                      = "${var.domain}"
 }
 
+module "strapi" {
+  enabled                     = 1
+  source                      = "modules/strapi"
+  namespace                   = "strapi"
+  domain                      = "${var.domain}"
+}
+
+
 
 
 
