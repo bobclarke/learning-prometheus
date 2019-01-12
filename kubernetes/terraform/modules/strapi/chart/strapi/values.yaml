@@ -4,6 +4,10 @@ imagePullPolicy: Always
 
 serviceType: ClusterIP
 
+admin-user: admin
+admin-pass: admin123
+admin-email: admin@foo.com
+
 database:
   type: mongo
   port: 27017

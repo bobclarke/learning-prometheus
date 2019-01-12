@@ -25,4 +25,14 @@ spec:
       containers:
       - name: post-install-job
         image: "byrnedo/alpine-curl"
-        command: ["/bin/sleep","{{default "280" .Values.sleepyTime}}"]
+        #command: ["/bin/sleep","{{default "280" .Values.sleepyTime}}"]
+        command: [
+          "curl", 
+          "-X", 
+          "POST", 
+          "http://api.strapi.svc.cluster.local:1337/auth/local/register", 
+          "-d", 
+          '{"username":"{{.Values.admin-user}}","password":"{{.Values.admin-pass}}","confirmPassword":"{{.Values.admin-pass}}","email":"{{.Values.admin-email}}"}', 
+          "-H", 
+          "Content-Type: application/json"
+          ]
