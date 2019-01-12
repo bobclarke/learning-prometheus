@@ -1,0 +1,11 @@
+description: A Helm chart for Strapi
+name: strapi
+version: 0.1.16
+keywords:
+- strapi
+- cms
+sources:
+- https://github.com/strapi/strapi-docker
+maintainers:
+- name: devops
+  email: devops@dentsuaegis.com

@@ -120,7 +120,7 @@ module "redis" {
 }
 
 module "monitoring" {
-  enabled                     = 1
+  enabled                     = 0
   source                      = "modules/monitoring"
   namespace                   = "monitoring"
   domain                      = "${var.domain}"
