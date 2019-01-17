@@ -45,19 +45,34 @@ resource "helm_release" "prometheus-blackbox-exporter" {
     depends_on          = ["helm_release.prometheus"] 
 }
 
-/*
 resource "helm_release" "grafana" {
     count               = "${var.enabled}"
     name                = "grafana"
     namespace           = "${var.namespace}"
     chart               = "grafana"
-    repository          = "stable"    
+    repository          = "stable"
+    version             = "1.19.1"    
     values = [
         "${ file( "${path.module}/config/grafana-values.yaml" ) }"
     ]
     depends_on          = ["helm_release.prometheus"] 
+
+    values = [
+    <<-EOF
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+      labels: {}
+      path: /
+      hosts:
+        - grafana.${var.domain}
+      tls: 
+        - hosts:
+          - grafana.${var.domain}
+    EOF
+  ]    
 }
-*/
 
 
 

@@ -1,6 +1,6 @@
 resource "helm_release" "strapi" {
     count               = "${var.enabled}"
-    name                = "strapi"
+    name                = "${var.namespace}-strapi"
     namespace           = "${var.namespace}"
     chart               = "strapi"
     repository          = "macbook"

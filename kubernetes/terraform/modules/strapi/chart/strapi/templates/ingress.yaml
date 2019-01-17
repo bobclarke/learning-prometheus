@@ -33,27 +33,4 @@ spec:
 
 
 
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  annotations:
-#    kubernetes.io/ingress.class: nginx
-#  labels:
-#  name: strapi
-#  namespace: strapi
-#spec:
-#  rules:
-#  - host: strapi.az.playground.gdpdentsu.net
-#    http:
-#      paths:
-#      - backend:
-#          serviceName: api
-#          servicePort: 1337
-#        path: /
-#  tls:
-#  - hosts:
-#    - strapi.az.playground.gdpdentsu.net
-
-
-
 
